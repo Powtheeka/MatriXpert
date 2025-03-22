@@ -26,58 +26,65 @@ function multiplyMatrices(A, B) {
     return result;
 }
 
-// Scalar multiplication
-function scalarMultiply() {
-    const A = parseMatrix(document.getElementById('matrixA').value);
+// Scalar multiplication for Matrix A or B
+function scalarMultiply(matrixType) {
+    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrix = parseMatrix(matrixInput);
     const scalar = parseFloat(document.getElementById('scalar').value);
-    const result = A.map(row => row.map(val => val * scalar));
-    displayResult(result, 'Scalar Multiplication Result');
+    const result = matrix.map(row => row.map(val => val * scalar));
+    displayResult(result, `Scalar Multiplication Result for Matrix ${matrixType}`);
 }
 
-// Determinant calculation (2x2 only for simplicity)
-function calculateDeterminant() {
-    const A = parseMatrix(document.getElementById('matrixA').value);
-    if (A.length === 2 && A[0].length === 2) {
-        const det = (A[0][0] * A[1][1]) - (A[0][1] * A[1][0]);
-        displayResult(`Determinant: ${det}`);
+// Determinant calculation for Matrix A or B (2x2 only for simplicity)
+function calculateDeterminant(matrixType) {
+    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrix = parseMatrix(matrixInput);
+
+    if (matrix.length === 2 && matrix[0].length === 2) {
+        const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+        displayResult(`Determinant of Matrix ${matrixType}: ${det}`);
     } else {
-        displayResult('Currently supports only 2x2 matrices for determinant.');
+        displayResult(`Currently supports only 2x2 matrices for determinant of Matrix ${matrixType}.`);
     }
 }
 
-// Inverse calculation (2x2 only for now)
-function calculateInverse() {
-    const A = parseMatrix(document.getElementById('matrixA').value);
-    if (A.length === 2 && A[0].length === 2) {
-        const det = (A[0][0] * A[1][1]) - (A[0][1] * A[1][0]);
+// Inverse calculation for Matrix A or B (2x2 only for now)
+function calculateInverse(matrixType) {
+    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrix = parseMatrix(matrixInput);
+
+    if (matrix.length === 2 && matrix[0].length === 2) {
+        const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
         if (det === 0) {
-            displayResult('Matrix A has no inverse (determinant is zero).');
+            displayResult(`Matrix ${matrixType} has no inverse (determinant is zero).`);
             return;
         }
         const inv = [
-            [A[1][1] / det, -A[0][1] / det],
-            [-A[1][0] / det, A[0][0] / det]
+            [matrix[1][1] / det, -matrix[0][1] / det],
+            [-matrix[1][0] / det, matrix[0][0] / det]
         ];
-        displayResult(inv, 'Inverse Matrix');
+        displayResult(inv, `Inverse Matrix ${matrixType}`);
     } else {
-        displayResult('Currently supports only 2x2 matrices for inverse.');
+        displayResult(`Currently supports only 2x2 matrices for inverse of Matrix ${matrixType}.`);
     }
 }
 
-// Eigenvalues (2x2 matrix using formula)
-function calculateEigenvalues() {
-    const A = parseMatrix(document.getElementById('matrixA').value);
-    if (A.length === 2 && A[0].length === 2) {
-        const trace = A[0][0] + A[1][1];
-        const determinant = (A[0][0] * A[1][1]) - (A[0][1] * A[1][0]);
+// Eigenvalues for Matrix A or B (2x2 matrix using formula)
+function calculateEigenvalues(matrixType) {
+    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrix = parseMatrix(matrixInput);
+
+    if (matrix.length === 2 && matrix[0].length === 2) {
+        const trace = matrix[0][0] + matrix[1][1];
+        const determinant = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
         const discriminant = Math.sqrt((trace ** 2) - (4 * determinant));
 
         const eigen1 = (trace + discriminant) / 2;
         const eigen2 = (trace - discriminant) / 2;
 
-        displayResult(`Eigenvalues: λ1 = ${eigen1.toFixed(2)}, λ2 = ${eigen2.toFixed(2)}`);
+        displayResult(`Eigenvalues of Matrix ${matrixType}: λ1 = ${eigen1.toFixed(2)}, λ2 = ${eigen2.toFixed(2)}`);
     } else {
-        displayResult('Eigenvalues supported for 2x2 matrices only.');
+        displayResult(`Eigenvalues supported for 2x2 matrices only for Matrix ${matrixType}.`);
     }
 }
 
