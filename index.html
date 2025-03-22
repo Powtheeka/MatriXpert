@@ -63,15 +63,22 @@
             <input type="number" id="scalar" placeholder="e.g., 5">
 
             <!-- Operation Buttons -->
+            <h3>Matrix A Operations:</h3>
             <button onclick="performOperation('add')">Add Matrices</button>
             <button onclick="performOperation('subtract')">Subtract Matrices</button>
             <button onclick="performOperation('multiply')">Multiply Matrices</button>
-            <button onclick="scalarMultiply()">Scalar Multiplication</button>
-            <button onclick="calculateDeterminant()">Determinant of A</button>
-            <button onclick="calculateInverse()">Inverse of A</button>
-            <button onclick="calculateEigenvalues()">Eigenvalues of A</button>
+            <button onclick="scalarMultiply('A')">Scalar Multiplication (A)</button>
+            <button onclick="calculateDeterminant('A')">Determinant of A</button>
+            <button onclick="calculateInverse('A')">Inverse of A</button>
+            <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
+
+            <h3>Matrix B Operations:</h3>
+            <button onclick="scalarMultiply('B')">Scalar Multiplication (B)</button>
+            <button onclick="calculateDeterminant('B')">Determinant of B</button>
+            <button onclick="calculateInverse('B')">Inverse of B</button>
+            <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
         </div>
-        
+
         <div id="result"></div>
     </div>
 
