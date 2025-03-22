@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Linear Algebra Tool</title>
+    <title>MatrixXpert - Linear Algebra Tool</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -10,7 +10,7 @@
             padding: 0;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 50px auto;
             background: #fff;
             padding: 20px;
@@ -20,12 +20,61 @@
         h1 {
             text-align: center;
         }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Linear Algebra Tool!</h1>
-        <p>Solve matrix operations, eigenvalues, and more. Stay tuned!</p>
+        <h1>Welcome to MatrixXpert!</h1>
+        <p>Perform various matrix operations easily.</p>
+
+        <!-- Matrix Input Section -->
+        <div class="matrix-input">
+            <label for="matrixA">Enter Matrix A (comma-separated rows):</label>
+            <textarea id="matrixA" rows="4" cols="50" placeholder="Example: 1,2;3,4"></textarea>
+
+            <label for="matrixB">Enter Matrix B (optional):</label>
+            <textarea id="matrixB" rows="4" cols="50" placeholder="Example: 5,6;7,8"></textarea>
+
+            <label for="scalar">Enter Scalar (for scalar multiplication):</label>
+            <input type="number" id="scalar" placeholder="e.g., 5">
+
+            <!-- Operation Buttons -->
+            <button onclick="performOperation('add')">Add Matrices</button>
+            <button onclick="performOperation('subtract')">Subtract Matrices</button>
+            <button onclick="performOperation('multiply')">Multiply Matrices</button>
+            <button onclick="scalarMultiply()">Scalar Multiplication</button>
+            <button onclick="calculateDeterminant()">Determinant of A</button>
+            <button onclick="calculateInverse()">Inverse of A</button>
+            <button onclick="calculateEigenvalues()">Eigenvalues of A</button>
+        </div>
+        
+        <div id="result"></div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
