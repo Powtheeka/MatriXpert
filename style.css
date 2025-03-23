@@ -1,97 +1,79 @@
 body {
-    background-color: #0f0f0f;
-    color: #fff;
+    background-color: black;
+    color: white;
     font-family: 'Bookman Old Style', serif;
-    padding: 20px;
-    text-align: center;
 }
 
 h1 {
-    font-size: 40px;
-    color: white;
-    margin-bottom: 10px;
-}
-
-h3 {
-    font-size: 20px;
-    color: yellow;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-h4 {
-    color: orange;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.matrix-section {
-    margin-top: 20px;
-}
-
-input[type="number"] {
-    width: 50px;
-    padding: 5px;
-    margin: 5px;
     text-align: center;
+    color: yellow;
 }
 
-/* Matrix grid fixes */
+/* Center matrix input grid */
+.matrix-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Grid styling for matrix input */
 .matrix-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, 40px);
     gap: 5px;
-    margin-top: 10px;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 10px;
 }
 
-.matrix-cell {
-    width: 50px;
-    height: 30px;
+/* Matrix input box */
+.matrix-grid input {
+    width: 40px;
+    height: 40px;
     text-align: center;
-    border: 1px solid white;
-    background-color: #333;
+    font-size: 16px;
+}
+
+/* Button styling */
+button {
+    background-color: green;
     color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.result-grid {
-    display: grid;
-    gap: 5px;
-    margin-top: 10px;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+/* Button hover */
+button:hover {
+    background-color: limegreen;
 }
 
-.result-cell {
-    width: 50px;
-    height: 30px;
-    text-align: center;
-    border: 1px solid white;
-    background-color: #222;
-    color: lightgreen;
-}
-
+/* Result styling */
 #result {
     margin-top: 20px;
+    text-align: center;
     color: lightgreen;
     font-size: 18px;
+}
+
+/* Proper display for result matrix */
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50px);
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Result matrix box */
+.result-grid div {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    background-color: #333;
+    color: lightgreen;
+    line-height: 40px;
+    border-radius: 5px;
 }
