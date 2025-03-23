@@ -1,3 +1,4 @@
+/* General Page Styles */
 body {
     background-color: black;
     color: white;
@@ -16,12 +17,17 @@ body {
     margin-top: 20px;
 }
 
-/* General Styles */
+/* General Header Styles */
 h2 {
     color: #ffcc00;
     margin-top: 20px;
 }
 
+h3 {
+    color: #ffcc00;
+}
+
+/* Button Styles */
 button {
     background-color: green;
     color: white;
@@ -37,6 +43,7 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Input Styles */
 input {
     width: 60px;
     padding: 5px;
@@ -48,12 +55,14 @@ input {
 table {
     margin: 0 auto;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
 td {
     border: 1px solid white;
-    padding: 5px;
+    padding: 8px;
     text-align: center;
+    width: 50px;
 }
 
 /* Result Section */
@@ -63,6 +72,7 @@ td {
     color: #ffcc00;
 }
 
+/* LaTeX Output Style */
 #latexResult {
     margin-top: 10px;
     color: white;
