@@ -6,7 +6,7 @@ function generateMatrix(matrix) {
     let rows = parseInt(document.getElementById(`rows${matrix}`).value);
     let cols = parseInt(document.getElementById(`cols${matrix}`).value);
     let matrixDiv = document.getElementById(`matrix${matrix}`);
-    
+
     let grid = `<div class="matrix-grid" style="grid-template-columns: repeat(${cols}, 1fr);">`;
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -22,7 +22,7 @@ function getMatrix(matrix) {
     let rows = parseInt(document.getElementById(`rows${matrix}`).value);
     let cols = parseInt(document.getElementById(`cols${matrix}`).value);
     let values = [];
-    
+
     for (let i = 0; i < rows; i++) {
         let row = [];
         for (let j = 0; j < cols; j++) {
@@ -38,7 +38,7 @@ function displayMatrix(matrix, title) {
     let rows = matrix.length;
     let cols = matrix[0].length;
     let grid = `<h4>${title}:</h4><div class="result-grid" style="grid-template-columns: repeat(${cols}, 1fr);">`;
-    
+
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             grid += `<div class="result-cell">${matrix[i][j].toFixed(2)}</div>`;
@@ -111,8 +111,12 @@ function calculateEigenvalues(matrix) {
         alert("Eigenvalues can only be calculated for square matrices.");
         return;
     }
-    let eig = math.eigs(mat);
-    document.getElementById('result').innerHTML = `<h4>Eigenvalues of Matrix ${matrix}:</h4><p>${eig.values.map(v => v.toFixed(2)).join(', ')}</p>`;
+    try {
+        let eig = math.eigs(mat);
+        document.getElementById('result').innerHTML = `<h4>Eigenvalues of Matrix ${matrix}:</h4><p>${eig.values.map(v => v.toFixed(2)).join(', ')}</p>`;
+    } catch (error) {
+        alert("Error calculating eigenvalues.");
+    }
 }
 
 // Generate LaTeX Output
