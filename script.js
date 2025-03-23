@@ -4,20 +4,16 @@ function generateMatrix(matrixName) {
     let cols = parseInt(document.getElementById(`cols${matrixName}`).value);
     let container = document.getElementById(`matrix${matrixName}`);
     container.innerHTML = '';
+    container.className = 'matrix-grid';
 
     for (let i = 0; i < rows; i++) {
-        let rowDiv = document.createElement('div');
-        rowDiv.style.display = 'flex';
-        rowDiv.style.gap = '5px'; // Reduced space between boxes
         for (let j = 0; j < cols; j++) {
             let input = document.createElement('input');
             input.type = 'number';
-            input.style.width = '40px';
-            input.style.marginBottom = '5px';
+            input.style.margin = '5px';
             input.id = `${matrixName}_${i}_${j}`;
-            rowDiv.appendChild(input);
+            container.appendChild(input);
         }
-        container.appendChild(rowDiv);
     }
 }
 
@@ -38,15 +34,21 @@ function getMatrix(matrixName) {
     return matrix;
 }
 
-// Function to display results properly in HTML
-function displayResult(result, label) {
-    let resultHTML = `<strong>${label}:</strong><br>`;
-    if (Array.isArray(result)) {
-        resultHTML += result.map(row => row.join(' , ')).join('<br>');
-    } else {
-        resultHTML += result.toFixed(2);
-    }
+// Function to display matrix as a grid
+function displayMatrix(matrix, label) {
+    let resultHTML = `<strong>${label}:</strong><div class="result-grid">`;
+    matrix.forEach(row => {
+        row.forEach(value => {
+            resultHTML += `<div>${value.toFixed(3)}</div>`;
+        });
+    });
+    resultHTML += `</div>`;
     document.getElementById('result').innerHTML = resultHTML;
+}
+
+// Function to display a single result value
+function displayResult(result, label) {
+    document.getElementById('result').innerHTML = `<strong>${label}:</strong> ${result.toFixed(3)}`;
 }
 
 // Matrix Addition
@@ -56,7 +58,7 @@ function addMatrices() {
 
     try {
         let result = math.add(matrixA, matrixB);
-        displayResult(result, 'Addition Result');
+        displayMatrix(result, 'Addition Result');
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Matrices must be of the same dimensions for addition.';
     }
@@ -69,7 +71,7 @@ function subtractMatrices() {
 
     try {
         let result = math.subtract(matrixA, matrixB);
-        displayResult(result, 'Subtraction Result');
+        displayMatrix(result, 'Subtraction Result');
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Matrices must be of the same dimensions for subtraction.';
     }
@@ -82,7 +84,7 @@ function multiplyMatrices() {
 
     try {
         let result = math.multiply(matrixA, matrixB);
-        displayResult(result, 'Multiplication Result');
+        displayMatrix(result, 'Multiplication Result');
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Invalid matrix dimensions for multiplication.';
     }
@@ -93,13 +95,13 @@ function calculateDeterminant(matrixName) {
     let matrix = getMatrix(matrixName);
     try {
         let determinant = math.det(matrix);
-        document.getElementById('result').innerHTML = `<strong>Determinant of Matrix ${matrixName}:</strong> ${determinant.toFixed(2)}`;
+        displayResult(determinant, `Determinant of Matrix ${matrixName}`);
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Determinant can only be calculated for square matrices.';
     }
 }
 
-// Inverse Calculation with determinant check
+// Inverse Calculation
 function calculateInverse(matrixName) {
     let matrix = getMatrix(matrixName);
     try {
@@ -109,7 +111,7 @@ function calculateInverse(matrixName) {
             return;
         }
         let inverse = math.inv(matrix);
-        displayResult(inverse, `Inverse of Matrix ${matrixName}`);
+        displayMatrix(inverse, `Inverse of Matrix ${matrixName}`);
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Inverse can only be calculated for square matrices.';
     }
@@ -118,10 +120,9 @@ function calculateInverse(matrixName) {
 // Eigenvalues Calculation
 function calculateEigenvalues(matrixName) {
     let matrix = getMatrix(matrixName);
-
     try {
         let eigenvalues = math.eigs(matrix).values;
-        document.getElementById('result').innerHTML = `<strong>Eigenvalues of Matrix ${matrixName}:</strong> ${eigenvalues.map(v => v.toFixed(2)).join(', ')}`;
+        document.getElementById('result').innerHTML = `<strong>Eigenvalues of Matrix ${matrixName}:</strong> ${eigenvalues.map(v => v.toFixed(3)).join(', ')}`;
     } catch (error) {
         document.getElementById('result').innerHTML = 'Error: Eigenvalues can only be calculated for square matrices.';
     }
@@ -130,6 +131,6 @@ function calculateEigenvalues(matrixName) {
 // LaTeX Output Generation
 function generateLaTeX(matrixName) {
     let matrix = getMatrix(matrixName);
-    let latex = `\\[\\begin{bmatrix}${matrix.map(row => row.join(' & ')).join(' \\\\ ')}\\end{bmatrix}\\]`;
-    document.getElementById('result').innerHTML = `<strong>LaTeX Matrix ${matrixName}:</strong> ${latex}`;
+    let latex = `\\[\\begin{bmatrix}${matrix.map(row => row.map(v => v.toFixed(3)).join(' & ')).join(' \\\\ ')}\\end{bmatrix}\\]`;
+    document.getElementById('result').innerHTML = `<strong>LaTeX Matrix ${matrixName}:</strong><br>${latex}`;
 }
