@@ -1,147 +1,125 @@
-// Generate matrix dynamically based on input dimensions
-function generateMatrix(matrixId, containerId) {
-    let rows = parseInt(document.getElementById(`rows${matrixId.charAt(6)}`).value);
-    let cols = parseInt(document.getElementById(`cols${matrixId.charAt(6)}`).value);
+// Generate Matrix Inputs
+function generateMatrix(matrixId) {
+    let rows = parseInt(document.getElementById(`rows${matrixId}`).value);
+    let cols = parseInt(document.getElementById(`cols${matrixId}`).value);
+    let matrixDiv = document.getElementById(`matrix${matrixId}`);
+    matrixDiv.innerHTML = ''; // Clear previous matrix
 
-    let container = document.getElementById(containerId);
-    container.innerHTML = ''; // Clear previous matrix
-
-    let table = document.createElement('table');
-    table.className = 'matrix-grid';
+    matrixDiv.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
 
     for (let i = 0; i < rows; i++) {
-        let row = document.createElement('tr');
         for (let j = 0; j < cols; j++) {
-            let cell = document.createElement('td');
             let input = document.createElement('input');
             input.type = 'number';
-            input.id = `${matrixId}-${i}-${j}`;
-            input.placeholder = `${i + 1},${j + 1}`;
-            cell.appendChild(input);
-            row.appendChild(cell);
+            input.className = 'matrix-cell';
+            input.id = `${matrixId}_${i}_${j}`;
+            matrixDiv.appendChild(input);
         }
-        table.appendChild(row);
     }
-    container.appendChild(table);
 }
 
-// Get matrix data from input
+// Get Matrix Data
 function getMatrixData(matrixId) {
-    let rows = document.querySelectorAll(`#${matrixId}Container tr`).length;
-    let cols = document.querySelectorAll(`#${matrixId}Container tr:first-child td`).length;
+    let rows = parseInt(document.getElementById(`rows${matrixId}`).value);
+    let cols = parseInt(document.getElementById(`cols${matrixId}`).value);
     let matrix = [];
-
     for (let i = 0; i < rows; i++) {
         let row = [];
         for (let j = 0; j < cols; j++) {
-            let value = parseFloat(document.getElementById(`${matrixId}-${i}-${j}`).value) || 0;
+            let value = parseFloat(document.getElementById(`${matrixId}_${i}_${j}`).value) || 0;
             row.push(value);
         }
         matrix.push(row);
     }
-    return math.matrix(matrix);
+    return matrix;
 }
 
-// Display matrix as a grid
-function displayMatrix(matrix, elementId) {
-    let container = document.getElementById(elementId);
-    container.innerHTML = '';
-    let table = document.createElement('table');
-    table.className = 'matrix-grid';
-
-    let matrixArray = matrix.toArray();
-    for (let i = 0; i < matrixArray.length; i++) {
-        let row = document.createElement('tr');
-        for (let j = 0; j < matrixArray[i].length; j++) {
-            let cell = document.createElement('td');
-            cell.innerText = matrixArray[i][j].toFixed(2);
-            row.appendChild(cell);
+// Matrix Operations
+function performOperation(operation) {
+    let matrixA = getMatrixData('A');
+    let matrixB = getMatrixData('B');
+    let result;
+    try {
+        switch (operation) {
+            case 'add':
+                result = math.add(matrixA, matrixB);
+                break;
+            case 'subtract':
+                result = math.subtract(matrixA, matrixB);
+                break;
+            case 'multiply':
+                result = math.multiply(matrixA, matrixB);
+                break;
         }
-        table.appendChild(row);
-    }
-    container.appendChild(table);
-}
-
-// Matrix addition
-function addMatrices() {
-    let A = getMatrixData('matrixA');
-    let B = getMatrixData('matrixB');
-    try {
-        let result = math.add(A, B);
-        displayMatrix(result, 'result');
+        displayMatrixResult(result);
     } catch (error) {
         alert('Error: ' + error.message);
     }
 }
 
-// Matrix subtraction
-function subtractMatrices() {
-    let A = getMatrixData('matrixA');
-    let B = getMatrixData('matrixB');
-    try {
-        let result = math.subtract(A, B);
-        displayMatrix(result, 'result');
-    } catch (error) {
-        alert('Error: ' + error.message);
-    }
+// Display Result in Grid Format
+function displayMatrixResult(matrix) {
+    let resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '<h4>Result:</h4>';
+    let matrixHTML = '<div class="matrix-grid" style="grid-template-columns: repeat(' + matrix[0].length + ', 60px);">';
+    matrix.forEach(row => {
+        row.forEach(cell => {
+            matrixHTML += `<div class="matrix-cell">${cell.toFixed(2)}</div>`;
+        });
+    });
+    matrixHTML += '</div>';
+    resultDiv.innerHTML += matrixHTML;
 }
 
-// Matrix multiplication
-function multiplyMatrices() {
-    let A = getMatrixData('matrixA');
-    let B = getMatrixData('matrixB');
-    try {
-        let result = math.multiply(A, B);
-        displayMatrix(result, 'result');
-    } catch (error) {
-        alert('Error: ' + error.message);
-    }
-}
-
-// Calculate determinant
+// Calculate Determinant
 function calculateDeterminant(matrixId) {
     let matrix = getMatrixData(matrixId);
     try {
         let det = math.det(matrix);
-        document.getElementById('result').innerHTML = `Determinant: ${det.toFixed(2)}`;
+        document.getElementById('result').innerHTML = `Determinant of Matrix ${matrixId}: ${det.toFixed(2)}`;
     } catch (error) {
         alert('Error: ' + error.message);
     }
 }
 
-// Calculate inverse
+// Calculate Inverse
 function calculateInverse(matrixId) {
     let matrix = getMatrixData(matrixId);
     try {
         let inverse = math.inv(matrix);
-        displayMatrix(inverse, 'result');
+        displayMatrixResult(inverse);
     } catch (error) {
         alert('Error: ' + error.message);
     }
 }
 
-// Calculate eigenvalues
+// Calculate Eigenvalues
 function calculateEigenvalues(matrixId) {
     let matrix = getMatrixData(matrixId);
     try {
-        let eigenvalues = math.eigs(matrix).values;
-        document.getElementById('result').innerHTML = `Eigenvalues: ${eigenvalues.map(v => v.toFixed(2)).join(', ')}`;
+        let eigenResult = math.eigs(matrix);
+        let eigenvalues = eigenResult.values.toArray(); // Corrected conversion
+        document.getElementById('result').innerHTML = `Eigenvalues of Matrix ${matrixId}: ${eigenvalues.map(v => v.toFixed(2)).join(', ')}`;
     } catch (error) {
         alert('Error: ' + error.message);
     }
 }
 
 // Generate LaTeX Output
-function generateLatex() {
-    let A = getMatrixData('matrixA');
-    let B = getMatrixData('matrixB');
-    let latexOutput = `
-    \\[
-    A = ${math.format(A, { notation: 'fixed', precision: 2 })}
-    \\]
-    \\[
-    B = ${math.format(B, { notation: 'fixed', precision: 2 })}
-    \\]
-    `;
-    document.getElementById('result').innerHTML = latexOutput;
+function generateLaTeX() {
+    let matrixA = getMatrixData('A');
+    let matrixB = getMatrixData('B');
+    let latexA = matrixToLaTeX(matrixA);
+    let latexB = matrixToLaTeX(matrixB);
+    document.getElementById('result').innerHTML = `LaTeX Matrix A: \\[${latexA}\\]<br>LaTeX Matrix B: \\[${latexB}\\]`;
+}
+
+// Convert Matrix to LaTeX
+function matrixToLaTeX(matrix) {
+    let latex = '\\begin{bmatrix}';
+    matrix.forEach(row => {
+        latex += row.join(' & ') + '\\\\';
+    });
+    latex += '\\end{bmatrix}';
+    return latex;
 }
