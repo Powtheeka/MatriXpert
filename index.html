@@ -2,29 +2,36 @@
 <html>
 <head>
     <title>MatriXpert</title>
+    <!-- Link to external CSS file -->
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Load Math.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
 </head>
 <body>
-    <h1>MatriXpert</h1>
-    <h2>Perform Various Matrix Operations Easily</h2>
+    <h1 id="main-title">MatriXpert</h1>
+    <h2 id="subtitle">Perform Various Matrix Operations Easily</h2>
 
+    <!-- Matrix A Section -->
     <h3>Enter Matrix A</h3>
     Rows: <input type="number" id="rowsA" value="2" min="1">
     Columns: <input type="number" id="colsA" value="2" min="1">
     <button onclick="generateMatrix('matrixA', 'matrixAContainer')">Generate Matrix A</button>
     <div id="matrixAContainer"></div>
 
+    <!-- Matrix B Section -->
     <h3>Enter Matrix B</h3>
     Rows: <input type="number" id="rowsB" value="2" min="1">
     Columns: <input type="number" id="colsB" value="2" min="1">
     <button onclick="generateMatrix('matrixB', 'matrixBContainer')">Generate Matrix B</button>
     <div id="matrixBContainer"></div>
 
+    <!-- Matrix Operations Section -->
     <h3>Matrix Operations</h3>
     <button onclick="addMatrices()">Add</button>
     <button onclick="subtractMatrices()">Subtract</button>
     <button onclick="multiplyMatrices()">Multiply</button>
 
+    <!-- Advanced Operations Section -->
     <h3>Advanced Operations</h3>
     <button onclick="calculateDeterminant('matrixA')">Determinant of A</button>
     <button onclick="calculateDeterminant('matrixB')">Determinant of B</button>
@@ -33,12 +40,14 @@
     <button onclick="calculateEigenvalues('matrixA')">Eigenvalues of A</button>
     <button onclick="calculateEigenvalues('matrixB')">Eigenvalues of B</button>
 
+    <!-- LaTeX Output -->
+    <button onclick="generateLatex()">Generate LaTeX Output</button>
+
+    <!-- Result Section -->
     <h3>Result:</h3>
     <div id="result"></div>
 
-    <!-- Math.js library to handle matrix operations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
+    <!-- Link to external JS file -->
     <script src="script.js"></script>
 </body>
 </html>
-
