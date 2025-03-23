@@ -90,19 +90,23 @@ function calculateDeterminant(matrix) {
 }
 
 // Inverse Calculation
-function calculateInverse(matrix) {
-    let mat = getMatrix(matrix);
-    if (mat.length !== mat[0].length) {
-        alert("Inverse can only be calculated for square matrices.");
+function calculateInverse(matrixName) {
+    let matrix = getMatrix(matrixName);
+    let det = math.det(matrix);
+
+    if (det === 0) {
+        document.getElementById("result").innerHTML = `<strong>Inverse of Matrix ${matrixName}: </strong> Matrix is singular, so inverse does not exist.`;
         return;
     }
+
     try {
-        let inverse = math.inv(mat);
-        displayMatrix(inverse, `Inverse of Matrix ${matrix}`);
+        let inverse = math.inv(matrix);
+        displayResult(inverse, `Inverse of Matrix ${matrixName}`);
     } catch (error) {
-        alert("Matrix is singular and cannot be inverted.");
+        document.getElementById("result").innerHTML = `<strong>Error:</strong> ${error.message}`;
     }
 }
+
 
 // Eigenvalues Calculation
 function calculateEigenvalues(matrix) {
