@@ -3,82 +3,54 @@
 <head>
     <title>MatriXpert - Linear Algebra Tool</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <style>
-        body {
-            background-color: #0d1b2a;
-            font-family: 'Bookman Old Style', serif;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background: #1b263b;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        h1 {
-            text-align: center;
-            font-size: 48px;
-            color: white;
-        }
-        h2 {
-            text-align: center;
-            color: yellow;
-            font-size: 24px;
-        }
-        .matrix-input {
-            display: grid;
-            grid-gap: 5px;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Title and Description -->
         <h1>MatriXpert</h1>
         <h2>Perform Various Matrix Operations Easily</h2>
 
-        <label for="rows">Enter Number of Rows:</label>
-        <input type="number" id="rows" min="1" max="5" value="3">
-        <label for="cols">Enter Number of Columns:</label>
-        <input type="number" id="cols" min="1" max="5" value="3">
-        <button onclick="generateMatrixInput()">Generate Matrices</button>
+        <!-- Matrix Input Section -->
+        <div>
+            <h3>Enter Matrix A</h3>
+            <label>Rows: <input type="number" id="rowsA" min="1" max="5" value="2"></label>
+            <label>Columns: <input type="number" id="colsA" min="1" max="5" value="2"></label>
+            <button onclick="generateMatrix('A')">Generate Matrix A</button>
+            <div id="matrixA" class="matrix-container"></div>
+        </div>
 
-        <h3>Matrix A:</h3>
-        <div id="matrixAInput" class="matrix-input"></div>
+        <div>
+            <h3>Enter Matrix B</h3>
+            <label>Rows: <input type="number" id="rowsB" min="1" max="5" value="2"></label>
+            <label>Columns: <input type="number" id="colsB" min="1" max="5" value="2"></label>
+            <button onclick="generateMatrix('B')">Generate Matrix B</button>
+            <div id="matrixB" class="matrix-container"></div>
+        </div>
 
-        <h3>Matrix B:</h3>
-        <div id="matrixBInput" class="matrix-input"></div>
+        <!-- Matrix Operations Section -->
+        <h3>Matrix Operations</h3>
+        <button onclick="addMatrices()">Add</button>
+        <button onclick="subtractMatrices()">Subtract</button>
+        <button onclick="multiplyMatrices()">Multiply</button>
 
-        <button onclick="performOperation('add')">Add</button>
-        <button onclick="performOperation('subtract')">Subtract</button>
-        <button onclick="performOperation('multiply')">Multiply</button>
-        <br><br>
-
+        <!-- Determinant, Inverse, and Eigenvalues -->
+        <h3>Advanced Operations</h3>
         <button onclick="calculateDeterminant('A')">Determinant of A</button>
         <button onclick="calculateDeterminant('B')">Determinant of B</button>
-        <br><br>
-
         <button onclick="calculateInverse('A')">Inverse of A</button>
         <button onclick="calculateInverse('B')">Inverse of B</button>
-        <br><br>
+        <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
+        <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
 
-        <button onclick="calculateEigen('A')">Eigenvalues of A</button>
-        <button onclick="calculateEigen('B')">Eigenvalues of B</button>
-        <br><br>
-
+        <!-- LaTeX Output -->
         <button onclick="generateLaTeX()">Generate LaTeX Output</button>
 
+        <!-- Result Display -->
         <h3>Result:</h3>
         <div id="result" class="matrix-output"></div>
     </div>
 
-    <!-- Link to numeric.js for eigenvalues and matrix operations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <!-- Script File -->
     <script src="script.js"></script>
 </body>
 </html>
-
