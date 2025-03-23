@@ -52,6 +52,7 @@ function displayMatrix(matrix, title) {
 function addMatrices() {
     matrixA = getMatrix('A');
     matrixB = getMatrix('B');
+    if (!validateMatrices(matrixA, matrixB)) return;
     let result = matrixA.map((row, i) => row.map((val, j) => val + matrixB[i][j]));
     displayMatrix(result, "Addition Result");
 }
@@ -60,6 +61,7 @@ function addMatrices() {
 function subtractMatrices() {
     matrixA = getMatrix('A');
     matrixB = getMatrix('B');
+    if (!validateMatrices(matrixA, matrixB)) return;
     let result = matrixA.map((row, i) => row.map((val, j) => val - matrixB[i][j]));
     displayMatrix(result, "Subtraction Result");
 }
@@ -68,16 +70,11 @@ function subtractMatrices() {
 function multiplyMatrices() {
     matrixA = getMatrix('A');
     matrixB = getMatrix('B');
-    let rowsA = matrixA.length, colsA = matrixA[0].length, colsB = matrixB[0].length;
-    let result = Array.from({ length: rowsA }, () => Array(colsB).fill(0));
-
-    for (let i = 0; i < rowsA; i++) {
-        for (let j = 0; j < colsB; j++) {
-            for (let k = 0; k < colsA; k++) {
-                result[i][j] += matrixA[i][k] * matrixB[k][j];
-            }
-        }
+    if (matrixA[0].length !== matrixB.length) {
+        alert("Matrix multiplication requires Matrix A columns to be equal to Matrix B rows.");
+        return;
     }
+    let result = math.multiply(matrixA, matrixB);
     displayMatrix(result, "Multiplication Result");
 }
 
@@ -123,21 +120,31 @@ function generateLaTeX() {
     matrixA = getMatrix('A');
     matrixB = getMatrix('B');
 
-    let latexA = `\\[\\begin{bmatrix}`;
+    let latexA = `\\begin{bmatrix}`;
     matrixA.forEach(row => {
         latexA += row.join(' & ') + ' \\\\ ';
     });
-    latexA += `\\end{bmatrix}\\]`;
+    latexA += `\\end{bmatrix}`;
 
-    let latexB = `\\[\\begin{bmatrix}`;
+    let latexB = `\\begin{bmatrix}`;
     matrixB.forEach(row => {
         latexB += row.join(' & ') + ' \\\\ ';
     });
-    latexB += `\\end{bmatrix}\\]`;
+    latexB += `\\end{bmatrix}`;
 
     document.getElementById('result').innerHTML = `
         <h4>LaTeX Output:</h4>
-        <p>LaTeX Matrix A: ${latexA}</p>
-        <p>LaTeX Matrix B: ${latexB}</p>
+        <p>Matrix A: \\[${latexA}\\]</p>
+        <p>Matrix B: \\[${latexB}\\]</p>
     `;
+    MathJax.typesetPromise();
+}
+
+// Validate Matrix Dimensions
+function validateMatrices(matrixA, matrixB) {
+    if (matrixA.length !== matrixB.length || matrixA[0].length !== matrixB[0].length) {
+        alert("Matrix dimensions must match for addition and subtraction.");
+        return false;
+    }
+    return true;
 }
