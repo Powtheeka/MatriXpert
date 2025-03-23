@@ -3,6 +3,8 @@ body {
     color: #fff;
     font-family: 'Bookman Old Style', serif;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 #title {
@@ -15,6 +17,7 @@ body {
 
 h2, h3 {
     color: #f9a825;
+    margin-top: 15px;
 }
 
 button {
