@@ -1,53 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MatrixXpert - Matrix Operations</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.0/math.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>MatriXpert</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-
 <body>
-    <h1>Perform Various Matrix Operations Easily</h1>
-
-    <!-- Matrix A -->
-    <h2>Enter Matrix A</h2>
-    <label>Rows:</label>
-    <input type="number" id="rowsA" value="2" min="1">
-    <label>Columns:</label>
-    <input type="number" id="colsA" value="2" min="1">
-    <button onclick="generateMatrix('A')">Generate Matrix A</button>
+    <!-- MatriXpert Title -->
+    <div id="title">MatriXpert</div>
+    
+    <h2>Perform Various Matrix Operations Easily</h2>
+    
+    <!-- Enter Matrix A -->
+    <h3>Enter Matrix A</h3>
+    Rows: <input id="rowsA" type="number" value="2" min="1">
+    Columns: <input id="colsA" type="number" value="2" min="1">
+    <button id="generateMatrixA">Generate Matrix A</button>
     <div id="matrixA"></div>
 
-    <!-- Matrix B -->
-    <h2>Enter Matrix B</h2>
-    <label>Rows:</label>
-    <input type="number" id="rowsB" value="2" min="1">
-    <label>Columns:</label>
-    <input type="number" id="colsB" value="2" min="1">
-    <button onclick="generateMatrix('B')">Generate Matrix B</button>
+    <!-- Enter Matrix B -->
+    <h3>Enter Matrix B</h3>
+    Rows: <input id="rowsB" type="number" value="2" min="1">
+    Columns: <input id="colsB" type="number" value="2" min="1">
+    <button id="generateMatrixB">Generate Matrix B</button>
     <div id="matrixB"></div>
 
     <!-- Matrix Operations -->
     <h3>Matrix Operations</h3>
-    <button onclick="addMatrices()">Add</button>
-    <button onclick="subtractMatrices()">Subtract</button>
-    <button onclick="multiplyMatrices()">Multiply</button>
+    <button id="add">Add</button>
+    <button id="subtract">Subtract</button>
+    <button id="multiply">Multiply</button>
 
     <!-- Advanced Operations -->
     <h3>Advanced Operations</h3>
-    <button onclick="calculateDeterminant('A')">Determinant of A</button>
-    <button onclick="calculateDeterminant('B')">Determinant of B</button>
-    <button onclick="calculateInverse('A')">Inverse of A</button>
-    <button onclick="calculateInverse('B')">Inverse of B</button>
-    <button onclick="generateLaTeX('A')">Generate LaTeX Output for A</button>
-    <button onclick="generateLaTeX('B')">Generate LaTeX Output for B</button>
+    <button id="determinantA">Determinant of A</button>
+    <button id="determinantB">Determinant of B</button>
+    <button id="inverseA">Inverse of A</button>
+    <button id="inverseB">Inverse of B</button>
+    <button id="eigenA">Eigenvalues of A</button>
+    <button id="eigenB">Eigenvalues of B</button>
+    <button id="generateLaTeX_A">Generate LaTeX Output for A</button>
+    <button id="generateLaTeX_B">Generate LaTeX Output for B</button>
 
     <!-- Result Section -->
     <h3>Result:</h3>
     <div id="result"></div>
+    <div id="latexResult"></div>
 
     <script src="script.js"></script>
 </body>
