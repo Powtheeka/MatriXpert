@@ -1,23 +1,16 @@
-// Generate matrix input grids dynamically
+// Generate matrix inputs based on rows and columns
 function generateMatrixInput() {
     const rows = parseInt(document.getElementById('rows').value);
     const cols = parseInt(document.getElementById('cols').value);
-
-    if (isNaN(rows) || isNaN(cols) || rows <= 0 || cols <= 0) {
-        alert('Please enter valid dimensions for the matrix.');
-        return;
-    }
-
-    createGrid('matrixAInput', rows, cols, 'A');
-    createGrid('matrixBInput', rows, cols, 'B');
+    createMatrixInputs('matrixAInput', rows, cols, 'A');
+    createMatrixInputs('matrixBInput', rows, cols, 'B');
 }
 
-// Create grid for matrix input
-function createGrid(containerId, rows, cols, matrixName) {
+// Create matrix input dynamically
+function createMatrixInputs(containerId, rows, cols, matrixName) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
     container.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
-
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             const input = document.createElement('input');
@@ -29,134 +22,169 @@ function createGrid(containerId, rows, cols, matrixName) {
     }
 }
 
-// Parse matrix from grid inputs
-function getMatrix(matrixName, rows, cols) {
+// Perform matrix operations
+function performOperation(operation) {
+    const matrixA = getMatrixValues('A');
+    const matrixB = getMatrixValues('B');
+    let result = [];
+
+    switch (operation) {
+        case 'add':
+            result = matrixAddition(matrixA, matrixB);
+            break;
+        case 'subtract':
+            result = matrixSubtraction(matrixA, matrixB);
+            break;
+        case 'multiply':
+            result = matrixMultiplication(matrixA, matrixB);
+            break;
+    }
+
+    if (result) {
+        displayResult(result);
+    }
+}
+
+// Get matrix values
+function getMatrixValues(matrixName) {
+    const rows = parseInt(document.getElementById('rows').value);
+    const cols = parseInt(document.getElementById('cols').value);
     let matrix = [];
     for (let i = 0; i < rows; i++) {
         let row = [];
         for (let j = 0; j < cols; j++) {
-            const val = parseFloat(document.getElementById(`${matrixName}_${i}_${j}`).value) || 0;
-            row.push(val);
+            const value = parseFloat(document.getElementById(`${matrixName}_${i}_${j}`).value) || 0;
+            row.push(value);
         }
         matrix.push(row);
     }
     return matrix;
 }
 
-// Matrix Operations
-function addMatrices(A, B) {
+// Matrix addition
+function matrixAddition(A, B) {
     return A.map((row, i) => row.map((val, j) => val + B[i][j]));
 }
-function subtractMatrices(A, B) {
+
+// Matrix subtraction
+function matrixSubtraction(A, B) {
     return A.map((row, i) => row.map((val, j) => val - B[i][j]));
 }
-function multiplyMatrices(A, B) {
-    let result = Array(A.length).fill(0).map(() => Array(B[0].length).fill(0));
-    for (let i = 0; i < A.length; i++) {
-        for (let j = 0; j < B[0].length; j++) {
-            for (let k = 0; k < A[0].length; k++) {
-                result[i][j] += A[i][k] * B[k][j];
+
+// Matrix multiplication
+function matrixMultiplication(A, B) {
+    const result = [];
+    const rowsA = A.length, colsA = A[0].length, colsB = B[0].length;
+    for (let i = 0; i < rowsA; i++) {
+        result[i] = [];
+        for (let j = 0; j < colsB; j++) {
+            let sum = 0;
+            for (let k = 0; k < colsA; k++) {
+                sum += A[i][k] * B[k][j];
             }
+            result[i][j] = sum;
         }
     }
     return result;
 }
 
-// Determinant (2x2 matrix only for now)
-function calculateDeterminant(matrixType) {
-    const matrix = getMatrix(matrixType, 2, 2);
-    const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-    displayResult(`Determinant of Matrix ${matrixType}: ${det}`);
-}
-
-// Inverse (2x2 matrix)
-function calculateInverse(matrixType) {
-    const matrix = getMatrix(matrixType, 2, 2);
-    const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-    if (det === 0) {
-        displayResult(`Matrix ${matrixType} has no inverse.`);
-        return;
-    }
-    const inv = [
-        [matrix[1][1] / det, -matrix[0][1] / det],
-        [-matrix[1][0] / det, matrix[0][0] / det]
-    ];
-    displayResult(inv, `Inverse of Matrix ${matrixType}`);
-}
-
-// Eigenvalues (2x2 matrix)
-function calculateEigenvalues(matrixType) {
-    const matrix = getMatrix(matrixType, 2, 2);
-    const trace = matrix[0][0] + matrix[1][1];
-    const determinant = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
-    const discriminant = Math.sqrt((trace ** 2) - (4 * determinant));
-
-    const eigen1 = (trace + discriminant) / 2;
-    const eigen2 = (trace - discriminant) / 2;
-
-    displayResult(`Eigenvalues of Matrix ${matrixType}: λ1 = ${eigen1.toFixed(2)}, λ2 = ${eigen2.toFixed(2)}`);
-}
-
-// LaTeX Output
-function generateLaTeX() {
-    const matrix = getMatrix('A', 2, 2);
-    let latexString = `\\begin{bmatrix}`;
-    matrix.forEach(row => {
-        latexString += row.join(' & ') + ` \\\\ `;
-    });
-    latexString += `\\end{bmatrix}`;
-    document.getElementById('result').innerHTML = `LaTeX Code: \${latexString} \`;
-    MathJax.typeset();
-}
-
-// Main function for matrix operations
-function performOperation(operation) {
-    const rows = parseInt(document.getElementById('rows').value);
-    const cols = parseInt(document.getElementById('cols').value);
-
-    if (isNaN(rows) || isNaN(cols) || rows <= 0 || cols <= 0) {
-        alert('Please enter valid matrix dimensions.');
-        return;
-    }
-
-    const A = getMatrix('A', rows, cols);
-    const B = getMatrix('B', rows, cols);
-
-    let result;
-    switch (operation) {
-        case 'add':
-            result = addMatrices(A, B);
-            displayMatrixResult(result, 'Addition Result');
-            break;
-        case 'subtract':
-            result = subtractMatrices(A, B);
-            displayMatrixResult(result, 'Subtraction Result');
-            break;
-        case 'multiply':
-            result = multiplyMatrices(A, B);
-            displayMatrixResult(result, 'Multiplication Result');
-            break;
-        default:
-            displayResult('Invalid operation');
-    }
-}
-
-// Display matrix results dynamically in grid format
-function displayMatrixResult(matrix, title) {
+// Display result in grid format
+function displayResult(result) {
     const resultContainer = document.getElementById('result');
-    resultContainer.innerHTML = `<h3>${title}</h3>`;
+    resultContainer.innerHTML = '';
     const matrixContainer = document.createElement('div');
     matrixContainer.className = 'matrix-result';
-    matrixContainer.style.gridTemplateColumns = `repeat(${matrix[0].length}, 40px)`;
+    matrixContainer.style.gridTemplateColumns = `repeat(${result[0].length}, 40px)`;
 
-    matrix.forEach(row => {
+    result.forEach(row => {
         row.forEach(val => {
             const cell = document.createElement('div');
             cell.className = 'result-cell';
-            cell.innerText = val;
+            cell.innerText = val.toFixed(2);
             matrixContainer.appendChild(cell);
         });
     });
 
     resultContainer.appendChild(matrixContainer);
+}
+
+// Determinant calculation
+function calculateDeterminant(matrixName) {
+    const matrix = getMatrixValues(matrixName);
+    if (matrix.length !== matrix[0].length) {
+        alert('Matrix must be square to calculate determinant');
+        return;
+    }
+    const det = determinant(matrix);
+    document.getElementById('result').innerHTML = `Determinant of Matrix ${matrixName}: ${det.toFixed(2)}`;
+}
+
+// Determinant of matrix
+function determinant(matrix) {
+    const n = matrix.length;
+    if (n === 1) return matrix[0][0];
+    if (n === 2) return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+
+    let det = 0;
+    for (let i = 0; i < n; i++) {
+        const subMatrix = matrix.slice(1).map(row => row.filter((_, j) => j !== i));
+        det += (i % 2 === 0 ? 1 : -1) * matrix[0][i] * determinant(subMatrix);
+    }
+    return det;
+}
+
+// Inverse calculation
+function calculateInverse(matrixName) {
+    const matrix = getMatrixValues(matrixName);
+    const det = determinant(matrix);
+    if (det === 0) {
+        alert(`Matrix ${matrixName} has no inverse (determinant is zero).`);
+        return;
+    }
+    const inverse = invertMatrix(matrix);
+    displayResult(inverse);
+}
+
+// Invert matrix
+function invertMatrix(matrix) {
+    const n = matrix.length;
+    const identity = matrix.map((row, i) => row.map((_, j) => (i === j ? 1 : 0)));
+    for (let i = 0; i < n; i++) {
+        let scale = matrix[i][i];
+        for (let j = 0; j < n; j++) {
+            matrix[i][j] /= scale;
+            identity[i][j] /= scale;
+        }
+        for (let k = 0; k < n; k++) {
+            if (k !== i) {
+                let factor = matrix[k][i];
+                for (let j = 0; j < n; j++) {
+                    matrix[k][j] -= factor * matrix[i][j];
+                    identity[k][j] -= factor * identity[i][j];
+                }
+            }
+        }
+    }
+    return identity;
+}
+
+// Generate LaTeX output
+function generateLaTeX() {
+    const matrixA = getMatrixValues('A');
+    const matrixB = getMatrixValues('B');
+
+    let latexA = '\\begin{pmatrix}';
+    let latexB = '\\begin{pmatrix}';
+
+    matrixA.forEach(row => latexA += row.join(' & ') + '\\\\');
+    matrixB.forEach(row => latexB += row.join(' & ') + '\\\\');
+
+    latexA += '\\end{pmatrix}';
+    latexB += '\\end{pmatrix}';
+
+    document.getElementById('result').innerHTML = `
+        <p>Matrix A: \${latexA}\</p>
+        <p>Matrix B: \${latexB}\</p>
+    `;
+    MathJax.typeset();
 }
