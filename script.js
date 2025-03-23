@@ -130,3 +130,18 @@ function calculateEigenvalues(matrixId) {
         alert('Error: ' + error.message);
     }
 }
+
+// Generate LaTeX Output
+function generateLatex() {
+    let A = getMatrixData('matrixA');
+    let B = getMatrixData('matrixB');
+    let latexOutput = `
+    \\[
+    A = ${math.format(A, { notation: 'fixed', precision: 2 })}
+    \\]
+    \\[
+    B = ${math.format(B, { notation: 'fixed', precision: 2 })}
+    \\]
+    `;
+    document.getElementById('result').innerHTML = latexOutput;
+}
