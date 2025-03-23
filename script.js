@@ -22,7 +22,23 @@ function createMatrixInputs(containerId, rows, cols, matrixName) {
     }
 }
 
-// Perform matrix operations
+// Get matrix values from user input
+function getMatrixValues(matrixName) {
+    const rows = parseInt(document.getElementById('rows').value);
+    const cols = parseInt(document.getElementById('cols').value);
+    let matrix = [];
+    for (let i = 0; i < rows; i++) {
+        let row = [];
+        for (let j = 0; j < cols; j++) {
+            const value = parseFloat(document.getElementById(`${matrixName}_${i}_${j}`).value) || 0;
+            row.push(value);
+        }
+        matrix.push(row);
+    }
+    return matrix;
+}
+
+// Matrix operations: addition, subtraction, multiplication
 function performOperation(operation) {
     const matrixA = getMatrixValues('A');
     const matrixB = getMatrixValues('B');
@@ -43,22 +59,6 @@ function performOperation(operation) {
     if (result) {
         displayResult(result);
     }
-}
-
-// Get matrix values
-function getMatrixValues(matrixName) {
-    const rows = parseInt(document.getElementById('rows').value);
-    const cols = parseInt(document.getElementById('cols').value);
-    let matrix = [];
-    for (let i = 0; i < rows; i++) {
-        let row = [];
-        for (let j = 0; j < cols; j++) {
-            const value = parseFloat(document.getElementById(`${matrixName}_${i}_${j}`).value) || 0;
-            row.push(value);
-        }
-        matrix.push(row);
-    }
-    return matrix;
 }
 
 // Matrix addition
@@ -108,18 +108,18 @@ function displayResult(result) {
     resultContainer.appendChild(matrixContainer);
 }
 
-// Determinant calculation
+// Determinant calculation for both matrices
 function calculateDeterminant(matrixName) {
     const matrix = getMatrixValues(matrixName);
     if (matrix.length !== matrix[0].length) {
-        alert('Matrix must be square to calculate determinant');
+        alert(`Matrix ${matrixName} must be square to calculate determinant`);
         return;
     }
     const det = determinant(matrix);
     document.getElementById('result').innerHTML = `Determinant of Matrix ${matrixName}: ${det.toFixed(2)}`;
 }
 
-// Determinant of matrix
+// Recursive function to calculate determinant
 function determinant(matrix) {
     const n = matrix.length;
     if (n === 1) return matrix[0][0];
@@ -133,9 +133,13 @@ function determinant(matrix) {
     return det;
 }
 
-// Inverse calculation
+// Inverse calculation for both matrices
 function calculateInverse(matrixName) {
     const matrix = getMatrixValues(matrixName);
+    if (matrix.length !== matrix[0].length) {
+        alert(`Matrix ${matrixName} must be square to calculate inverse`);
+        return;
+    }
     const det = determinant(matrix);
     if (det === 0) {
         alert(`Matrix ${matrixName} has no inverse (determinant is zero).`);
@@ -145,7 +149,7 @@ function calculateInverse(matrixName) {
     displayResult(inverse);
 }
 
-// Invert matrix
+// Function to invert a matrix
 function invertMatrix(matrix) {
     const n = matrix.length;
     const identity = matrix.map((row, i) => row.map((_, j) => (i === j ? 1 : 0)));
@@ -168,7 +172,21 @@ function invertMatrix(matrix) {
     return identity;
 }
 
-// Generate LaTeX output
+// Eigenvalues and eigenvectors for matrix A and B
+function calculateEigen(matrixName) {
+    const matrix = getMatrixValues(matrixName);
+    if (matrix.length !== matrix[0].length) {
+        alert(`Matrix ${matrixName} must be square to calculate eigenvalues`);
+        return;
+    }
+    const eig = numeric.eig(matrix);
+    const eigenValues = eig.lambda.x.map(val => val.toFixed(2));
+    document.getElementById('result').innerHTML = `
+        Eigenvalues of Matrix ${matrixName}: [${eigenValues.join(', ')}]
+    `;
+}
+
+// Generate LaTeX output for both matrices
 function generateLaTeX() {
     const matrixA = getMatrixValues('A');
     const matrixB = getMatrixValues('B');
