@@ -1,0 +1,68 @@
+body {
+    font-family: "Bookman Old Style", serif;
+    background-color: #0c1445;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background: #1e1e2f;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+h1, h2 {
+    text-align: center;
+    color: #ffeb3b;
+}
+.matrix-dimensions, .buttons {
+    text-align: center;
+    margin: 20px 0;
+}
+input, button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: "Bookman Old Style", serif;
+}
+button {
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+.matrix-container {
+    display: grid;
+    gap: 5px;
+    margin: 10px auto;
+    justify-content: center;
+}
+.matrix-cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+.result-container {
+    text-align: center;
+    margin-top: 20px;
+}
+.matrix-result {
+    display: inline-grid;
+    grid-template-columns: repeat(auto-fit, 40px);
+    gap: 5px;
+    margin-top: 10px;
+}
+.result-cell {
+    width: 40px;
+    height: 40px;
+    background-color: #444;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+}
