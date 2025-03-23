@@ -1,79 +1,64 @@
-/* General Page Styles */
 body {
     background-color: black;
     color: white;
-    font-family: "Bookman Old Style", serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Bookman Old Style', serif;
     text-align: center;
+}
+
+h2, h3 {
+    color: gold;
 }
 
 /* MatriXpert Title */
 #title {
-    font-size: 40px;
+    font-size: 45px;
     color: white;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;
 }
 
-/* General Header Styles */
-h2 {
-    color: #ffcc00;
-    margin-top: 20px;
-}
-
-h3 {
-    color: #ffcc00;
-}
-
-/* Button Styles */
-button {
-    background-color: green;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Input Styles */
+/* Grid Layout */
 input {
-    width: 60px;
-    padding: 5px;
+    width: 40px;
+    height: 25px;
     margin: 5px;
     text-align: center;
 }
 
-/* Matrix Grid Styles */
+/* Styling Buttons */
+button {
+    background-color: green;
+    color: white;
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: limegreen;
+}
+
+/* Matrix Grid Styling */
 table {
-    margin: 0 auto;
+    margin: 10px auto;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
 td {
     border: 1px solid white;
     padding: 8px;
     text-align: center;
-    width: 50px;
+    font-size: 14px;
+    width: 40px;
+    height: 40px;
 }
 
-/* Result Section */
-#result {
-    margin-top: 20px;
+/* LaTeX Output Styling */
+pre {
+    text-align: center;
+    color: lime;
     font-size: 18px;
-    color: #ffcc00;
-}
-
-/* LaTeX Output Style */
-#latexResult {
-    margin-top: 10px;
-    color: white;
 }
