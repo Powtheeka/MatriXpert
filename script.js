@@ -3,17 +3,13 @@ function parseMatrix(input) {
     return input.split(';').map(row => row.split(',').map(Number));
 }
 
-// Matrix addition
+// Matrix Operations
 function addMatrices(A, B) {
     return A.map((row, i) => row.map((val, j) => val + B[i][j]));
 }
-
-// Matrix subtraction
 function subtractMatrices(A, B) {
     return A.map((row, i) => row.map((val, j) => val - B[i][j]));
 }
-
-// Matrix multiplication
 function multiplyMatrices(A, B) {
     let result = Array(A.length).fill(0).map(() => Array(B[0].length).fill(0));
     for (let i = 0; i < A.length; i++) {
@@ -26,37 +22,37 @@ function multiplyMatrices(A, B) {
     return result;
 }
 
-// Scalar multiplication for Matrix A or B
+// Scalar Multiplication
 function scalarMultiply(matrixType) {
-    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrixInput = document.getElementById('matrixA').value;
     const matrix = parseMatrix(matrixInput);
     const scalar = parseFloat(document.getElementById('scalar').value);
     const result = matrix.map(row => row.map(val => val * scalar));
     displayResult(result, `Scalar Multiplication Result for Matrix ${matrixType}`);
 }
 
-// Determinant calculation for Matrix A or B (2x2 only for simplicity)
+// Determinant (2x2 only)
 function calculateDeterminant(matrixType) {
-    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrixInput = document.getElementById('matrixA').value;
     const matrix = parseMatrix(matrixInput);
 
     if (matrix.length === 2 && matrix[0].length === 2) {
         const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
         displayResult(`Determinant of Matrix ${matrixType}: ${det}`);
     } else {
-        displayResult(`Currently supports only 2x2 matrices for determinant of Matrix ${matrixType}.`);
+        displayResult(`Currently supports only 2x2 matrices for determinant.`);
     }
 }
 
-// Inverse calculation for Matrix A or B (2x2 only for now)
+// Inverse (2x2 matrix only)
 function calculateInverse(matrixType) {
-    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrixInput = document.getElementById('matrixA').value;
     const matrix = parseMatrix(matrixInput);
 
     if (matrix.length === 2 && matrix[0].length === 2) {
         const det = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
         if (det === 0) {
-            displayResult(`Matrix ${matrixType} has no inverse (determinant is zero).`);
+            displayResult(`Matrix ${matrixType} has no inverse.`);
             return;
         }
         const inv = [
@@ -65,13 +61,13 @@ function calculateInverse(matrixType) {
         ];
         displayResult(inv, `Inverse Matrix ${matrixType}`);
     } else {
-        displayResult(`Currently supports only 2x2 matrices for inverse of Matrix ${matrixType}.`);
+        displayResult(`Supports only 2x2 matrices for inverse.`);
     }
 }
 
-// Eigenvalues for Matrix A or B (2x2 matrix using formula)
+// Eigenvalues (2x2)
 function calculateEigenvalues(matrixType) {
-    const matrixInput = matrixType === 'A' ? document.getElementById('matrixA').value : document.getElementById('matrixB').value;
+    const matrixInput = document.getElementById('matrixA').value;
     const matrix = parseMatrix(matrixInput);
 
     if (matrix.length === 2 && matrix[0].length === 2) {
@@ -84,11 +80,45 @@ function calculateEigenvalues(matrixType) {
 
         displayResult(`Eigenvalues of Matrix ${matrixType}: λ1 = ${eigen1.toFixed(2)}, λ2 = ${eigen2.toFixed(2)}`);
     } else {
-        displayResult(`Eigenvalues supported for 2x2 matrices only for Matrix ${matrixType}.`);
+        displayResult(`Eigenvalues supported for 2x2 matrices only.`);
     }
 }
 
-// Main function to perform matrix operations
+// LaTeX Output
+function generateLaTeX() {
+    const matrixInput = document.getElementById('matrixA').value;
+    const matrix = parseMatrix(matrixInput);
+    let latexString = `\\begin{bmatrix}`;
+    matrix.forEach(row => {
+        latexString += row.join(' & ') + ` \\\\ `;
+    });
+    latexString += `\\end{bmatrix}`;
+    document.getElementById('result').innerHTML = `LaTeX Code: \${latexString} \`;
+    MathJax.typeset();
+}
+
+// Graphical Matrix Visualization
+function graphMatrix() {
+    const matrixInput = document.getElementById('matrixA').value;
+    const matrix = parseMatrix(matrixInput);
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const cellSize = 40;
+    matrix.forEach((row, i) => {
+        row.forEach((val, j) => {
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+            ctx.strokeStyle = '#fff';
+            ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize);
+            ctx.fillStyle = '#000';
+            ctx.fillText(val, j * cellSize + 15, i * cellSize + 25);
+        });
+    });
+}
+
+// Main function for matrix operations
 function performOperation(operation) {
     const A = parseMatrix(document.getElementById('matrixA').value);
     const B = parseMatrix(document.getElementById('matrixB').value);
