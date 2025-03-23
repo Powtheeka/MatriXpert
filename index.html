@@ -70,15 +70,19 @@
         <h1>Welcome to MatrixXpert!</h1>
         <p style="text-align: center; font-size: 1.5rem; color: #FFD700;">Perform various matrix operations easily.</p>
 
-        <!-- Matrix Input Section -->
-        <label for="matrixA">Enter Matrix A (comma-separated rows):</label>
-        <textarea id="matrixA" rows="4" cols="50" placeholder="Example: 1,2;3,4"></textarea>
+        <!-- Matrix Dimension Input -->
+        <label for="rows">Enter Rows:</label>
+        <input type="number" id="rows" placeholder="Rows">
+        <label for="cols">Enter Columns:</label>
+        <input type="number" id="cols" placeholder="Columns">
+        <button onclick="generateMatrixInput()">Generate Matrix Input</button>
 
-        <label for="matrixB">Enter Matrix B (optional):</label>
-        <textarea id="matrixB" rows="4" cols="50" placeholder="Example: 5,6;7,8"></textarea>
-
-        <label for="scalar">Enter Scalar (for scalar multiplication):</label>
-        <input type="number" id="scalar" placeholder="e.g., 5">
+        <!-- Matrix Input Grids -->
+        <h3>Matrix A:</h3>
+        <div id="matrixAInput"></div>
+        
+        <h3>Matrix B:</h3>
+        <div id="matrixBInput"></div>
 
         <!-- Matrix Operations Section -->
         <h3>Matrix Operations:</h3>
@@ -86,18 +90,21 @@
         <button onclick="performOperation('subtract')">Subtract Matrices</button>
         <button onclick="performOperation('multiply')">Multiply Matrices</button>
 
-        <!-- Scalar and Advanced Operations -->
+        <!-- Advanced Operations -->
         <h3>Advanced Operations:</h3>
-        <button onclick="scalarMultiply('A')">Scalar Multiplication (A)</button>
         <button onclick="calculateDeterminant('A')">Determinant of A</button>
         <button onclick="calculateInverse('A')">Inverse of A</button>
         <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
-        
+
+        <button onclick="calculateDeterminant('B')">Determinant of B</button>
+        <button onclick="calculateInverse('B')">Inverse of B</button>
+        <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
+
         <!-- New Features -->
         <h3>New Features:</h3>
         <button onclick="graphMatrix()">Graphical Matrix Visualization</button>
         <button onclick="generateLaTeX()">Generate LaTeX Output</button>
-        <div id="matrixGrid"></div>
+
         <canvas id="matrixCanvas" width="400" height="400"></canvas>
         <div id="result"></div>
     </div>
