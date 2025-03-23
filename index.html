@@ -2,115 +2,46 @@
 <html>
 <head>
     <title>MatrixXpert - Linear Algebra Tool</title>
-    <style>
-        body {
-            font-family: 'Bookman Old Style', serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        textarea, input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            white-space: pre-wrap;
-        }
-        .matrix-grid {
-            display: grid;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        .matrix-cell {
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            font-size: 1rem;
-        }
-        canvas {
-            margin-top: 20px;
-            background-color: white;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to MatrixXpert!</h1>
-        <p style="text-align: center; font-size: 1.5rem; color: #FFD700;">Perform various matrix operations easily.</p>
+        <h1>MatrixXpert - Perform Various Matrix Operations Easily</h1>
+        <div class="matrix-dimensions">
+            <label>Rows:</label>
+            <input type="number" id="rows" min="1" max="5">
+            <label>Columns:</label>
+            <input type="number" id="cols" min="1" max="5">
+            <button onclick="generateMatrixInput()">Generate Matrix</button>
+        </div>
 
-        <!-- Matrix Dimension Input -->
-        <label for="rows">Enter Rows:</label>
-        <input type="number" id="rows" placeholder="Rows">
-        <label for="cols">Enter Columns:</label>
-        <input type="number" id="cols" placeholder="Columns">
-        <button onclick="generateMatrixInput()">Generate Matrix Input</button>
-
-        <!-- Matrix Input Grids -->
-        <h3>Matrix A:</h3>
+        <h2>Matrix A:</h2>
         <div id="matrixAInput" class="matrix-container"></div>
 
-        
-        <h3>Matrix B:</h3>
+        <h2>Matrix B:</h2>
         <div id="matrixBInput" class="matrix-container"></div>
-        
 
-        <!-- Matrix Operations Section -->
-        <h3>Matrix Operations:</h3>
-        <button onclick="performOperation('add')">Add Matrices</button>
-        <button onclick="performOperation('subtract')">Subtract Matrices</button>
-        <button onclick="performOperation('multiply')">Multiply Matrices</button>
+        <div class="buttons">
+            <button onclick="performOperation('add')">Add Matrices</button>
+            <button onclick="performOperation('subtract')">Subtract Matrices</button>
+            <button onclick="performOperation('multiply')">Multiply Matrices</button>
+            <button onclick="calculateDeterminant('A')">Determinant of A</button>
+            <button onclick="calculateDeterminant('B')">Determinant of B</button>
+            <button onclick="calculateInverse('A')">Inverse of A</button>
+            <button onclick="calculateInverse('B')">Inverse of B</button>
+            <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
+            <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
+            <button onclick="generateLaTeX()">Generate LaTeX Output</button>
+        </div>
 
-        <!-- Advanced Operations -->
-        <h3>Advanced Operations:</h3>
-        <button onclick="calculateDeterminant('A')">Determinant of A</button>
-        <button onclick="calculateInverse('A')">Inverse of A</button>
-        <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
+        <h2>Graphical Matrix Visualization:</h2>
+        <canvas id="matrixCanvas" width="200" height="200"></canvas>
 
-        <button onclick="calculateDeterminant('B')">Determinant of B</button>
-        <button onclick="calculateInverse('B')">Inverse of B</button>
-        <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
-
-        <!-- New Features -->
-        <h3>New Features:</h3>
-        <button onclick="graphMatrix()">Graphical Matrix Visualization</button>
-        <button onclick="generateLaTeX()">Generate LaTeX Output</button>
-
-        <canvas id="matrixCanvas" width="400" height="400"></canvas>
-        <div id="result"></div>
+        <h2>Results:</h2>
+        <div id="result" class="result-container"></div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
