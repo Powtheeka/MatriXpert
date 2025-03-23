@@ -15,9 +15,8 @@ function generateMatrixInput() {
 // Create grid for matrix input
 function createGrid(containerId, rows, cols, matrixName) {
     const container = document.getElementById(containerId);
-    container.innerHTML = ''; // Clear existing grid
-    container.style.display = 'grid';
-    container.style.gridTemplateColumns = `repeat(${cols}, 40px)`; // Set grid columns
+    container.innerHTML = '';
+    container.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
 
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -127,27 +126,37 @@ function performOperation(operation) {
     switch (operation) {
         case 'add':
             result = addMatrices(A, B);
-            displayResult(result, 'Addition Result');
+            displayMatrixResult(result, 'Addition Result');
             break;
         case 'subtract':
             result = subtractMatrices(A, B);
-            displayResult(result, 'Subtraction Result');
+            displayMatrixResult(result, 'Subtraction Result');
             break;
         case 'multiply':
             result = multiplyMatrices(A, B);
-            displayResult(result, 'Multiplication Result');
+            displayMatrixResult(result, 'Multiplication Result');
             break;
         default:
             displayResult('Invalid operation');
     }
 }
 
-// Display results dynamically
-function displayResult(result, title = '') {
-    if (Array.isArray(result)) {
-        const resultStr = result.map(row => row.join(', ')).join('\n');
-        document.getElementById('result').innerHTML = `<strong>${title}:</strong><br>${resultStr.replace(/\n/g, '<br>')}`;
-    } else {
-        document.getElementById('result').innerHTML = result;
-    }
+// Display matrix results dynamically in grid format
+function displayMatrixResult(matrix, title) {
+    const resultContainer = document.getElementById('result');
+    resultContainer.innerHTML = `<h3>${title}</h3>`;
+    const matrixContainer = document.createElement('div');
+    matrixContainer.className = 'matrix-result';
+    matrixContainer.style.gridTemplateColumns = `repeat(${matrix[0].length}, 40px)`;
+
+    matrix.forEach(row => {
+        row.forEach(val => {
+            const cell = document.createElement('div');
+            cell.className = 'result-cell';
+            cell.innerText = val;
+            matrixContainer.appendChild(cell);
+        });
+    });
+
+    resultContainer.appendChild(matrixContainer);
 }
