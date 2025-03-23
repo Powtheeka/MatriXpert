@@ -1,7 +1,7 @@
 /* Overall body styling */
 body {
     font-family: "Bookman Old Style", serif;
-    background-color: #0c1445; /* Galaxy color theme */
+    background-color: #0c1445; /* Galaxy theme */
     color: #fff;
     margin: 0;
     padding: 0;
@@ -20,8 +20,9 @@ body {
 /* Styling MatrixXpert title */
 h1 {
     text-align: center;
-    font-size: 32px;
-    color: #fff; /* MatrixXpert in white */
+    font-size: 40px; /* Increased size */
+    font-weight: bold;
+    color: #fff; /* White color for MatrixXpert */
     margin-top: 10px;
 }
 
@@ -79,10 +80,11 @@ button:hover {
 
 /* Matrix result in grid format */
 .matrix-result {
-    display: inline-grid;
+    display: grid;
     grid-template-columns: repeat(auto-fit, 40px);
     gap: 5px;
     margin-top: 10px;
+    justify-content: center;
 }
 
 /* Styling matrix result cells */
