@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MatrixXpert - Perform Various Matrix Operations Easily</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
 </head>
 <body>
-
     <h1>Perform Various Matrix Operations Easily</h1>
 
     <!-- Matrix A Input -->
-    <h2>Enter Matrix A</h2>
-    Rows: <input type="number" id="rowsA" value="2" />
-    Columns: <input type="number" id="colsA" value="2" />
-    <button onclick="generateMatrix('A')">Generate Matrix A</button>
-    <div id="matrixA" class="matrix-container"></div>
+    <div>
+        <h2>Enter Matrix A</h2>
+        Rows: <input type="number" id="rowsA" value="2"> 
+        Columns: <input type="number" id="colsA" value="2"> 
+        <button onclick="generateMatrix('A')">Generate Matrix A</button>
+        <div id="matrixA" class="matrix-grid"></div>
+    </div>
 
     <!-- Matrix B Input -->
-    <h2>Enter Matrix B</h2>
-    Rows: <input type="number" id="rowsB" value="2" />
-    Columns: <input type="number" id="colsB" value="2" />
-    <button onclick="generateMatrix('B')">Generate Matrix B</button>
-    <div id="matrixB" class="matrix-container"></div>
+    <div>
+        <h2>Enter Matrix B</h2>
+        Rows: <input type="number" id="rowsB" value="2"> 
+        Columns: <input type="number" id="colsB" value="2"> 
+        <button onclick="generateMatrix('B')">Generate Matrix B</button>
+        <div id="matrixB" class="matrix-grid"></div>
+    </div>
 
-    <!-- Matrix Operations Buttons -->
-    <h3>Matrix Operations</h3>
+    <!-- Matrix Operations -->
+    <h2>Matrix Operations</h2>
     <button onclick="addMatrices()">Add</button>
     <button onclick="subtractMatrices()">Subtract</button>
     <button onclick="multiplyMatrices()">Multiply</button>
 
     <!-- Advanced Operations -->
-    <h3>Advanced Operations</h3>
+    <h2>Advanced Operations</h2>
     <button onclick="calculateDeterminant('A')">Determinant of A</button>
     <button onclick="calculateDeterminant('B')">Determinant of B</button>
     <button onclick="calculateInverse('A')">Inverse of A</button>
     <button onclick="calculateInverse('B')">Inverse of B</button>
-    <button onclick="calculateEigenvalues('A')">Eigenvalues of A</button>
-    <button onclick="calculateEigenvalues('B')">Eigenvalues of B</button>
-    <button onclick="generateLaTeX('A')">Generate LaTeX Output for A</button>
-    <button onclick="generateLaTeX('B')">Generate LaTeX Output for B</button>
+    <button onclick="generateLaTeX('A')">Generate LaTeX Output</button>
 
-    <!-- Result Display -->
-    <h3>Result:</h3>
+    <!-- Result Section -->
+    <h2>Result:</h2>
     <div id="result"></div>
 
-    <!-- Link JS File -->
     <script src="script.js"></script>
 </body>
 </html>
