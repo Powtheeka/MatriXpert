@@ -21,6 +21,7 @@ function generateMatrix(matrixId) {
 
     let grid = document.createElement('div');
     grid.className = 'matrix-grid';
+    grid.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
 
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -38,17 +39,17 @@ function displayResult(matrix) {
     let resultDiv = document.getElementById('result');
     resultDiv.innerHTML = '<h3>Result:</h3>';
 
+    let rows = matrix.length;
+    let cols = matrix[0].length;
+
     let grid = document.createElement('div');
-    grid.className = 'matrix-grid';
+    grid.className = 'result-grid';
+    grid.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
 
     matrix.forEach(row => {
         row.forEach(val => {
             let box = document.createElement('div');
-            box.innerHTML = val.toFixed(3); // Reduce to 3 decimal places
-            box.style.width = '50px';
-            box.style.height = '40px';
-            box.style.textAlign = 'center';
-            box.style.border = '1px solid #33ff33';
+            box.innerHTML = val.toFixed(3); // 3 decimal places
             grid.appendChild(box);
         });
     });
