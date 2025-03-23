@@ -1,10 +1,13 @@
+/* Overall body styling */
 body {
     font-family: "Bookman Old Style", serif;
-    background-color: #0c1445;
+    background-color: #0c1445; /* Galaxy color theme */
     color: #fff;
     margin: 0;
     padding: 0;
 }
+
+/* Container for the main content */
 .container {
     max-width: 900px;
     margin: 50px auto;
@@ -13,14 +16,30 @@ body {
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
-h1, h2 {
+
+/* Styling MatrixXpert title */
+h1 {
     text-align: center;
-    color: #ffeb3b;
+    font-size: 32px;
+    color: #fff; /* MatrixXpert in white */
+    margin-top: 10px;
 }
+
+/* Styling the tagline below the title */
+h2.tagline {
+    text-align: center;
+    font-size: 18px;
+    color: #ffeb3b; /* Yellow color */
+    margin-top: -10px;
+}
+
+/* Matrix dimensions and button container */
 .matrix-dimensions, .buttons {
     text-align: center;
     margin: 20px 0;
 }
+
+/* Input fields and buttons */
 input, button {
     padding: 10px;
     margin: 5px;
@@ -36,27 +55,37 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+/* Matrix input containers */
 .matrix-container {
     display: grid;
     gap: 5px;
     margin: 10px auto;
     justify-content: center;
 }
+
+/* Matrix input grid cells */
 .matrix-cell {
     width: 40px;
     height: 40px;
     text-align: center;
 }
+
+/* Result container */
 .result-container {
     text-align: center;
     margin-top: 20px;
 }
+
+/* Matrix result in grid format */
 .matrix-result {
     display: inline-grid;
     grid-template-columns: repeat(auto-fit, 40px);
     gap: 5px;
     margin-top: 10px;
 }
+
+/* Styling matrix result cells */
 .result-cell {
     width: 40px;
     height: 40px;
